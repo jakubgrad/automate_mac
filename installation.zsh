@@ -5,15 +5,6 @@ function wait_for_confirmation {
     read -p "Press Enter to continue..."
 }
 
-
-echo "After pressing enter, Xcode will open. In Xcode, you'll need to login with github account and a token and download the repository. This script will run in the background for approximately 20 minutes without requiring any action"
-echo "Press enter to proceed"
-wait_for_confirmation
-open -a Xcode
-
-echo "Ensuring ~/.zshenv exists"
-touch ~/.zshenv
-
 echo "Creating Bycycle_all directory inside Documents"
 cd ~/Documents
 mkdir Bycycle_all
@@ -21,6 +12,15 @@ mkdir Bycycle_all
 echo "Entering Bycycle_all"
 cd Bycycle_all
 
+echo "After pressing enter, Xcode will open. In Xcode, you'll need to login with github account and a token and download the repository. Make sure to download the repository to ~/Documents/Bycycle_all. This script will run in the background for approximately 20 minutes without requiring any action."
+wait_for_confirmation
+open -a Xcode
+
+echo "Ensuring ~/.zshenv exists"
+touch $HOME/.zshenv
+
+echo "Entering Bycycle_all"
+cd Bycycle_all
 
 echo "Downloading homebrew"
 git clone https://github.com/Homebrew/brew.git
@@ -56,3 +56,12 @@ echo "Installing VSCode. Highly prone to failure, maybe should be done by going 
 brew install --cask visual-studio-code
 
 echo "Setup probably completed successfully!"
+
+echo "Opening iPhone simulator"
+open -a Simulator
+echo "Wait 2 seconds for it to open"
+sleep 2
+
+echo "flutter run inside ~/Documents/Bycycle_all/ByCycle"
+cd ~/Documents/Bycycle_all/ByCycle
+flutter run

@@ -5,54 +5,54 @@ function wait_for_confirmation {
     read -p "Press Enter to continue..."
 }
 
-# Open Xcode
-echo "Opening Xcode..."
+
+echo "After pressing enter, Xcode will open. In Xcode, you'll need to login with github account and a token and download the repository. This script will run in the background for approximately 20 minutes without requiring any action"
+echo "Press enter to proceed"
+wait_for_confirmation
 open -a Xcode
-wait_for_confirmation
 
-# Log in to GitHub with token
-echo "Logging in to GitHub..."
-# Replace with actual GitHub login process if scriptable
-wait_for_confirmation
+echo "Ensuring ~/.zshenv exists"
+touch ~/.zshenv
 
-# Clone repository and checkout branch
-echo "Cloning repository and checking out branch..."
-git clone <repository_url>
-cd <repository_directory>
-git checkout <branch_name>
-wait_for_confirmation
+echo "Creating Bycycle_all directory inside Documents"
+cd ~/Documents
+mkdir Bycycle_all
 
-# Install VSCode
-echo "Installing VSCode..."
-brew install --cask visual-studio-code
-wait_for_confirmation
+echo "Entering Bycycle_all"
+cd Bycycle_all
+
+
+echo "Downloading homebrew"
+git clone https://github.com/Homebrew/brew.git
+
+echo "Switching to tag / version 4.3.8 of homebrew"
+git checkout tags/4.3.8
+
+echo "Adding homebrew to the path in .zshenv"
+echo 'export PATH="$PATH:$HOME/Documents/Bycycle_all/brew/bin"' >> ~/.zshenv
+source ~/.zshenv
+echo "Checking if brew works i.e. was added to the path correctly"
+brew --version
 
 # Download Flutter SDK (ARM version)
 echo "Downloading Flutter SDK..."
-# Replace with actual download command
-wait_for_confirmation
+cd ~/Documents/Bycycle_all
+curl -O "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.22.2-stable.zip"
 
-# Set Flutter SDK path in .zshenv or .zshrc
 echo "Setting Flutter SDK path..."
-echo 'export PATH="$HOME/Documents/flutter/bin:$PATH"' >> ~/.zshenv
+echo 'export PATH="$HOME/Documents/Bycycle_all/flutter/bin:$PATH"' >> ~/.zshenv
 source ~/.zshenv
-wait_for_confirmation
 
-# Verify Flutter installation
 echo "Verifying Flutter installation..."
 flutter -v
 flutter doctor
-wait_for_confirmation
 
-# Install CocoaPods
-echo "Installing CocoaPods..."
-sudo gem install cocoapods
-wait_for_confirmation
+echo "Installing cocoapds using brew. After 3-15 minutes a popup will ask for administrator priviledges, but clicking no will actually not affect the installation. But in any case, it will need to be done"
+sleep 5
+brew install cocoapods
 
-# Configure Xcode and Flutter
-echo "Configuring Xcode and Flutter..."
-# Additional Xcode configurations
-# Flutter run command as needed
-wait_for_confirmation
 
-echo "Setup completed successfully!"
+echo "Installing VSCode. Highly prone to failure, maybe should be done by going to Apple Store instead"
+brew install --cask visual-studio-code
+
+echo "Setup probably completed successfully!"

@@ -1,10 +1,5 @@
 #!/bin/zsh
 
-# Function to wait for user confirmation
-function wait_for_confirmation {
-    read -p "Press Enter to continue..."
-}
-
 echo "Creating Bycycle_all directory inside Documents"
 cd ~/Documents
 mkdir Bycycle_all
@@ -13,7 +8,7 @@ echo "Entering Bycycle_all"
 cd Bycycle_all
 
 echo "After pressing enter, Xcode will open. In Xcode, you'll need to login with github account and a token and download the repository. Make sure to download the repository to ~/Documents/Bycycle_all. This script will run in the background for approximately 20 minutes without requiring any action."
-wait_for_confirmation
+sleep 6
 open -a Xcode
 
 echo "Ensuring ~/.zshenv exists"
